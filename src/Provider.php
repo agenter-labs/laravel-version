@@ -1,6 +1,6 @@
 <?php
 
-namespace Akaunting\Version;
+namespace AgenterLab\Version;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
@@ -16,13 +16,7 @@ class Provider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        $this->publishes([
-            __DIR__ . '/Config/version.php' => config_path('version.php'),
-        ], 'version');
 
-        $this->app->singleton('version', function ($app) {
-            return new Version($app);
-        });
     }
 
     /**
@@ -32,6 +26,10 @@ class Provider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/Config/version.php', 'version');
+        $this->app->singleton('version', function ($app) {
+            return new Version($app);
+        });
+
+        $this->mergeConfigFrom(__DIR__ . '/../config/version.php', 'version');
     }
 }
